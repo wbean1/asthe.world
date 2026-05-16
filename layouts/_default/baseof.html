@@ -3,7 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ if .Title }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
+  {{ $title := .Site.Title }}
+  {{ $bgColor := "#fff" }}
+  {{ if eq .Section "ferns" }}
+    {{ $title = "As The World Ferns" }}
+    {{ $bgColor = "#e8f5e9" }}
+  {{ end }}
+  <title>{{ if .Title }}{{ .Title }} - {{ end }}{{ $title }}</title>
   <style>
     body {
       font-family: 'Courier New', Courier, monospace;
@@ -11,7 +17,7 @@
       margin: 0 auto;
       padding: 20px;
       text-align: center;
-      background-color: #fff;
+      background-color: {{ $bgColor }};
       color: #333;
     }
     header h1 {
@@ -56,7 +62,7 @@
 </head>
 <body>
   <header>
-    <h1><a href="/" style="text-decoration: none; color: inherit;">{{ .Site.Title }}</a></h1>
+    <h1><a href="/{{ .Section }}/" style="text-decoration: none; color: inherit;">{{ $title }}</a></h1>
   </header>
 
   <main>
@@ -64,15 +70,15 @@
   </main>
 
   <footer>
-    <p>&copy; {{ now.Year }} {{ .Site.Title }}</p>
-    <p><a href="/burns/">Archive</a></p>
+    <p>&copy; {{ now.Year }} {{ $title }}</p>
+    <p><a href="/{{ .Section }}/">Archive</a></p>
   </footer>
 
   <script>
     function goToRandom() {
       // This will be populated with comic paths during build
       const comicPaths = [
-        {{ range (where .Site.RegularPages "Section" "burns") }}
+        {{ range (where .Site.RegularPages "Section" .Section) }}
           "{{ .RelPermalink }}",
         {{ end }}
       ];

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if .Title }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+      background-color: #fff;
+      color: #333;
+    }
+    header h1 {
+      margin-bottom: 40px;
+    }
+    .comic-container {
+      margin-bottom: 20px;
+    }
+    .comic-image {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #000;
+    }
+    .navigation {
+      margin: 20px 0;
+    }
+    .navigation a, .navigation button {
+      padding: 5px 10px;
+      margin: 0 5px;
+      text-decoration: none;
+      border: 1px solid #000;
+      color: #000;
+      background: #eee;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .navigation a:hover, .navigation button:hover {
+      background: #ddd;
+    }
+    .caption {
+      font-style: italic;
+      margin-top: 10px;
+      font-size: 0.9em;
+    }
+    footer {
+      margin-top: 50px;
+      font-size: 0.8em;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="/" style="text-decoration: none; color: inherit;">{{ .Site.Title }}</a></h1>
+  </header>
+
+  <main>
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  <footer>
+    <p>&copy; {{ now.Year }} {{ .Site.Title }}</p>
+    <p><a href="/burns/">Archive</a></p>
+  </footer>
+
+  <script>
+    function goToRandom() {
+      // This will be populated with comic paths during build
+      const comicPaths = [
+        {{ range (where .Site.RegularPages "Section" "burns") }}
+          "{{ .RelPermalink }}",
+        {{ end }}
+      ];
+      if (comicPaths.length > 0) {
+        const randomPath = comicPaths[Math.floor(Math.random() * comicPaths.length)];
+        window.location.href = randomPath;
+      }
+    }
+  </script>
+</body>
+</html>

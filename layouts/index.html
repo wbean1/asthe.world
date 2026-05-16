@@ -1,0 +1,11 @@
+{{ define "main" }}
+  {{ $all_comics := (where .Site.RegularPages "Section" "burns").ByDate }}
+  {{ if gt (len $all_comics) 0 }}
+    {{ $latest := index $all_comics (sub (len $all_comics) 1) }}
+    <script>window.location.href = "{{ $latest.RelPermalink }}";</script>
+    <p>Redirecting to latest comic...</p>
+    <noscript><a href="{{ $latest.RelPermalink }}">Go to latest comic</a></noscript>
+  {{ else }}
+    <p>No comics yet. Stay tuned!</p>
+  {{ end }}
+{{ end }}

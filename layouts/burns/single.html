@@ -1,0 +1,35 @@
+{{ define "main" }}
+<div class="comic-container">
+  <h2>{{ .Title }}</h2>
+  
+  <div class="navigation">
+    {{ $all_comics := (where .Site.RegularPages "Section" "burns").ByDate }}
+    {{ $first := index $all_comics 0 }}
+    {{ $last := index $all_comics (sub (len $all_comics) 1) }}
+    
+    <a href="{{ $first.RelPermalink }}" title="First">|&lt;</a>
+    
+    {{ if .PrevInSection }}
+      <a href="{{ .PrevInSection.RelPermalink }}" title="Previous">&lt;</a>
+    {{ else }}
+      <span class="navigation-disabled">&lt;</span>
+    {{ end }}
+    
+    <button onclick="goToRandom()">Random</button>
+    
+    {{ if .NextInSection }}
+      <a href="{{ .NextInSection.RelPermalink }}" title="Next">&gt;</a>
+    {{ else }}
+      <span class="navigation-disabled">&gt;</span>
+    {{ end }}
+    
+    <a href="{{ $last.RelPermalink }}" title="Latest">&gt;|</a>
+  </div>
+
+  <img src="{{ .Params.image }}" alt="{{ .Params.caption }}" title="{{ .Params.caption }}" class="comic-image">
+  
+  <div class="caption">
+    {{ .Params.caption }}
+  </div>
+</div>
+{{ end }}

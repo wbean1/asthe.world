@@ -1,0 +1,6 @@
+baseURL = 'https://asthe.world/'
+languageCode = 'en-us'
+title = 'As The World Burns'
+
+[params]
+  description = 'A webcomic about... things.'

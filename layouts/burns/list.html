@@ -1,4 +1,10 @@
 {{ define "main" }}
+{{ $all_comics := .Pages.ByDate }}
+{{ if gt (len $all_comics) 0 }}
+  {{ $latest := index $all_comics (sub (len $all_comics) 1) }}
+  <script>window.location.href = "{{ $latest.RelPermalink }}";</script>
+{{ end }}
+
 <h1>Archive</h1>
 <ul style="list-style: none; padding: 0;">
   {{ range .Pages.ByDate.Reverse }}
